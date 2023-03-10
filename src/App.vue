@@ -1,17 +1,23 @@
 <template>
-<div id="app">
-  <BudgetList :list="list" />
-</div>
+  <div id="app">
+    <FormMain @submitForm="onSubmit"/>
+    <TotalBalance :total="totalBalance"/>
+    <BudgetList :list="list" @deleteItem="onDeleteItem"/>
+  </div>
 </template>
 
 <script>
 
 import BudgetList from "@/components/BudgetList.vue";
+import TotalBalance from "@/components/TotalBalance";
+import FormMain from "@/components/FormMain";
 
 export default {
   name: 'App',
   components: {
     BudgetList,
+    TotalBalance,
+    FormMain,
   },
   data: () => ({
     list: {
@@ -27,8 +33,27 @@ export default {
         comment: 'Some outcome comments',
         id: 2,
       },
+
     },
   }),
+  computed: {
+    totalBalance() {
+      return Object.values(this.list).reduce((acc, item) => acc + item.value, 0)
+    },
+  },
+  methods: {
+    onDeleteItem(id) {
+      console.log(1)
+      delete this.list[id]
+    },
+    onSubmit(data){
+      const newObj = {
+        ...data,
+        id: String(Math.random())
+      };
+      this.list[newObj.id] = newObj;
+    },
+  },
 }
 </script>
 
