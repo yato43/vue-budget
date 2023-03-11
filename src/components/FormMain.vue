@@ -19,6 +19,19 @@
 </template>
 
 <script>
+function typeChecker(obj) {
+  if (obj.type === 'INCOME'){
+    return obj
+  }else if (obj.type === 'OUTCOME'){
+    if (obj.value > 0){
+      obj.value *= -1
+      return obj
+    }else{
+      return obj
+    }
+  }
+}
+
 export default {
   name: "FormMain",
   data: () => ({
@@ -44,12 +57,12 @@ export default {
     onSubmit() {
       this.$refs.addItemForm.validate((valid) => {
         if (valid) {
-          this.$emit('submitForm', {...this.formData});
+          this.$emit('submitForm', {...typeChecker(this.formData)});
           this.$refs.addItemForm.resetFields();
         }
-      })
-    }
-  }
+      });
+    },
+  },
 }
 </script>
 

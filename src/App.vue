@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     onDeleteItem(id) {
-      console.log(1)
       delete this.list[id]
     },
     onSubmit(data){

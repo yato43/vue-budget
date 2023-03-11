@@ -1,5 +1,5 @@
 <template>
-  <div class="total-value">
+  <div class="total-value" :class="balanceObj">
     Balance: {{ total }}
   </div>
 </template>
@@ -13,6 +13,17 @@ export default {
       default: 0,
     },
   },
+  computed: {
+    balanceObj() {
+      let sign = 'neutral';
+      if (this.total > 0) {
+        sign = 'positive'
+      } else if (this.total < 0) {
+        sign = 'negative'
+      }
+      return sign
+    }
+  },
 }
 </script>
 
@@ -23,4 +34,17 @@ export default {
   padding: 20px;
   text-align: center;
 }
+
+.positive {
+  color: #05f618;
+}
+
+.negative {
+  color: #f00;
+}
+
+.neutral {
+  color: #000;
+}
+
 </style>
